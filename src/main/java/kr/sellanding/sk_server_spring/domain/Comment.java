@@ -7,7 +7,9 @@ import lombok.*;
 @Table(name = "comment")
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class Comment extends BaseTimeEntity {
 
     @Id

@@ -13,7 +13,7 @@ public class CommentRequest {
 
     @NotBlank
     @Size(max = 500)
-    private String contnet;
+    private String content;
 
     @NotNull
     private Long inkId;
