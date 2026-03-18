@@ -3,7 +3,7 @@ spring:
     name: sk-server-spring
   profiles:
     active: local # 기본 프로파일을 local로 설정
-  
+
   security:
     # Supabase 설정 제거 및 로컬 JWT 설정 추가
     jwt:
@@ -29,6 +29,7 @@ springdoc:
     hibernate:
       ddl-auto: validate # Flyway를 사용하므로 validate로 변경하여 정합성만 체크
     show-sql: true
+    extra_physical_table_observer: org.hibernate.tool.schema.internal.GroupedSchemaMigratorImpl
     properties:
       hibernate:
         format_sql: true
