@@ -1,8 +1,8 @@
 # Sellanding Guestbook API (Spring Boot Migration)
 
-본 프로젝트는 기존 Go(Gin) 기반의 백엔드 서버를 **Java 17 + Spring Boot** 환경으로 마이그레이션한 결과물입니다. 포트폴리오용으로 제작되었으며, 현대적인 Java 에코시스템의 모범 사례(Best Practices)를 적용하는 데 집중했습니다.
+본 프로젝트는 기존 Go(Gin) 기반의 백엔드 서버를 **Java 21 + Spring Boot** 환경으로 마이그레이션한 결과물입니다. 
 
-## 🚀 기술 스택
+## 기술 스택
 - **Language**: Java 17
 - **Framework**: Spring Boot 4.0.3
 - **Database**: MySQL (Operational), H2 (Local/Test)
@@ -13,7 +13,7 @@
 
 ---
 
-## 🛠 마이그레이션 과정 및 주요 개선 사항
+## 마이그레이션 과정 및 주요 개선 사항
 
 ### 1. 에코시스템의 강점 활용 (Standardization)
 - **Go (Custom)**: Go 서버에서는 수동으로 에러 처리를 하던 방식을 Spring의 `@RestControllerAdvice`를 활용한 **Global Exception Handling**으로 전환했습니다. 이를 통해 모든 API 응답 구조를 표준화하고 유지보수성을 극대화했습니다.
@@ -31,7 +31,7 @@
 
 ---
 
-## 🔍 기술적 깊이: Deep-Dive 문제 케이스 및 해결 전략
+## 기술적 깊이: Deep-Dive 문제 케이스 및 해결 전략
 
 마이그레이션 과정에서 고려했거나, 향후 확장 시 직면할 수 있는 기술적 도전 과제입니다.
 
@@ -49,7 +49,7 @@
 
 ---
 
-## 📈 향후 개선 계획
+## 향후 개선 계획
 - **QueryDSL 도입**: 현재의 복잡한 검색 쿼리를 타입 안정성이 보장된 동적 쿼리로 전환.
 - **Redis 통계 수집**: 방문자 수나 게시글 통계를 실시간으로 집계하기 위한 레디스 도입.
 - **CI/CD 파이프라인**: GitHub Actions를 활용한 자동 빌드 및 테스트 시스템 구축.
