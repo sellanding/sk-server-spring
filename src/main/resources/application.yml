@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: sk-server-spring
+  profiles:
+    active: local # 기본 프로파일을 local로 설정
+  
+  security:
+    # Supabase 설정 제거 및 로컬 JWT 설정 추가
+    jwt:
+      secret: ${JWT_SECRET:vmb706ot898b98b98b98b98b98b98b98b98b98b98b98b98b98b98b98b98b98b98b98b98b98b98b98b98b} # 256비트 이상의 문자열 권장
+      expiration: 86400000 # 24시간
+
+# Swagger OpenAPI 설정
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    groups-order: ASC
+    operations-sorter: method
+    disable-swagger-default-url: true
+    display-request-duration: true
+  api-docs:
+    path: /v3/api-docs
+  show-actuator: true
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
+
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate # Flyway를 사용하므로 validate로 변경하여 정합성만 체크
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        highlight_sql: true
+
+  # Flyway 설정
+  flyway:
+    enabled: true
+    baseline-on-migrate: true # 기존 DB가 있는 경우를 대비

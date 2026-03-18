@@ -1,0 +1,23 @@
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+  datasource:
+    # 환경 변수를 통해 민감 정보를 주입받도록 설정 (보안 모범 사례)
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:sk_db}?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:password}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate # 운영 환경에서는 스키마 구조만 검증
+    database-platform: org.hibernate.dialect.MySQLDialect
+    properties:
+      hibernate:
+        # MySQL 특화 최적화 설정
+        jdbc:
+          batch_size: 100
+        order_inserts: true
+        order_updates: true

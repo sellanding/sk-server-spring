@@ -11,10 +11,10 @@ import org.springframework.data.repository.query.Param;
 
 public interface InkRepository extends JpaRepository<Ink, Long> {
     @Query(
-        "SELECT i FROM Ink i JOIN FETCH i.user" +
-            "WHERE (:keyword IS NULL OR i.title LIKE %keyword% OR i.content LIKE %keyword%)" +
-            "AND (:userId IS NULL OR i.user.id = :userId)" +
-            "AND (:userName IS NULL OR i.user.name LIKE %userName%)"
+        "SELECT i FROM Ink i JOIN FETCH i.user " +
+            "WHERE (:keyword IS NULL OR i.title LIKE %:keyword% OR i.content LIKE %:keyword%) " +
+            "AND (:userId IS NULL OR i.user.id = :userId) " +
+            "AND (:userName IS NULL OR i.user.name LIKE %:userName%)"
     )
     Page<Ink> searchInks(
         @Param("keyword") String keyword,
