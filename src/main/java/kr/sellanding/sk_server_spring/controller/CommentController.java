@@ -12,7 +12,6 @@ import kr.sellanding.sk_server_spring.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -27,9 +26,9 @@ public class CommentController {
     @ResponseStatus(HttpStatus.CREATED)
     public CommentResponse createComment(
         @Valid @RequestBody CommentRequest request,
-        @AuthenticationPrincipal Jwt jwt
+        @AuthenticationPrincipal String userId
     ) {
-        User user = userService.getUser(UUID.fromString(jwt.getSubject()));
+        User user = userService.getUser(UUID.fromString(userId));
         Comment comment = commentService.createComment(request, user);
         return convertToDto(comment);
     }
@@ -38,9 +37,9 @@ public class CommentController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteComment(
         @PathVariable Long id,
-        @AuthenticationPrincipal Jwt jwt
+        @AuthenticationPrincipal String userId
     ) {
-        User user = userService.getUser(UUID.fromString(jwt.getSubject()));
+        User user = userService.getUser(UUID.fromString(userId));
         commentService.deleteComment(id, user);
     }
 

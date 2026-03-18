@@ -40,7 +40,7 @@ public class InkService {
     @Transactional
     public Ink createInk(InkRequest request, User user) {
         List<String> blocked = profanityService.findBlockedTerms(
-            request.getContent()
+            request.content()
         );
         if (!blocked.isEmpty()) {
             throw new IllegalArgumentException(
@@ -49,8 +49,8 @@ public class InkService {
         }
 
         Ink ink = Ink.builder()
-            .title(request.getTitle())
-            .content(request.getContent())
+            .title(request.title())
+            .content(request.content())
             .user(user)
             .build();
 
