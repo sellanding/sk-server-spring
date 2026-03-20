@@ -2,15 +2,42 @@ spring:
   application:
     name: sk-server-spring
   profiles:
-    active: local # 기본 프로파일을 local로 설정
+    active: local
 
+  # 1. 데이터베이스 접속 정보 추가
+  datasource:
+    url: jdbc:mysql://localhost:3306/sk_db?useSSL=false&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
+    username: root
+    password: zhtmahtm@39
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  # 2. Flyway 설정 (기존 설정 유지 및 보완)
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    locations: classpath:db/migration # V1__init_schema.sql 파일이 있을 위치
+
+  # 3. JPA/Hibernate 설정 (통합 및 최적화)
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate # Flyway와 함께 사용 시 가장 안전한 옵션
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        highlight_sql: true
+        dialect: org.hibernate.dialect.MySQLDialect # MySQL 8.0 이상 최적화
+    # 영호님이 추가하셨던 상세 검증 옵션 유지
+    extra_physical_table_observer: org.hibernate.tool.schema.internal.GroupedSchemaMigratorImpl
+
+  # 4. Security & JWT (기존 설정 유지)
   security:
-    # Supabase 설정 제거 및 로컬 JWT 설정 추가
     jwt:
-      secret: ${JWT_SECRET:vmb706ot898b98b98b98b98b98b98b98b98b98b98b98b98b98b98b98b98b98b98b98b98b98b98b98b98b} # 256비트 이상의 문자열 권장
-      expiration: 86400000 # 24시간
+      secret: ${JWT_SECRET:vmb706ot898b98b98b98b98b98b98b98b98b98b98b98b98b98b98b98b98b98b98b98b98b98b98b98b98b98b}
+      expiration: 86400000
 
-# Swagger OpenAPI 설정
+# 5. Swagger/OpenAPI (기존 설정 유지)
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
@@ -24,18 +51,7 @@ springdoc:
   default-consumes-media-type: application/json
   default-produces-media-type: application/json
 
-  jpa:
-    open-in-view: false
-    hibernate:
-      ddl-auto: validate # Flyway를 사용하므로 validate로 변경하여 정합성만 체크
-    show-sql: true
-    extra_physical_table_observer: org.hibernate.tool.schema.internal.GroupedSchemaMigratorImpl
-    properties:
-      hibernate:
-        format_sql: true
-        highlight_sql: true
-
-  # Flyway 설정
-  flyway:
-    enabled: true
-    baseline-on-migrate: true # 기존 DB가 있는 경우를 대비
+# 로그 레벨 설정 (SQL 파라미터 바인딩 확인용 - 선택 사항)
+logging:
+  level:
+    org.hibernate.orm.jdbc.bind: trace

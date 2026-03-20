@@ -31,6 +31,22 @@ public class InkService {
         return inkRepository.searchInks(keyword, userId, userName, pageable);
     }
 
+    public List<Ink> getInksNoOffset(
+        Long lastId,
+        String keyword,
+        UUID userId,
+        String userName,
+        Pageable pageable
+    ) {
+        return inkRepository.searchInksNoOffset(
+            lastId,
+            keyword,
+            userId,
+            userName,
+            pageable
+        );
+    }
+
     public Ink getInk(Long id) {
         return inkRepository
             .findByIdWithComments(id)

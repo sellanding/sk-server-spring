@@ -24,6 +24,22 @@ public interface InkRepository extends JpaRepository<Ink, Long> {
     );
 
     @Query(
+        "SELECT i FROM Ink i JOIN FETCH i.user " +
+            "WHERE (:lastId IS NULL OR i.id < :lastId) " +
+            "AND (:keyword IS NULL OR i.title LIKE %:keyword% OR i.content LIKE %:keyword%) " +
+            "AND (:userId IS NULL OR i.user.id = :userId) " +
+            "AND (:userName IS NULL OR i.user.name LIKE %:userName%) " +
+            "ORDER BY i.id DESC"
+    )
+    java.util.List<Ink> searchInksNoOffset(
+        @Param("lastId") Long lastId,
+        @Param("keyword") String keyword,
+        @Param("userId") UUID userId,
+        @Param("userName") String userName,
+        org.springframework.data.domain.Pageable pageable
+    );
+
+    @Query(
         "SELECT i FROM Ink i LEFT JOIN FETCH i.comments c LEFT JOIN FETCH c.user WHERE i.id = :id"
     )
     Optional<Ink> findByIdWithComments(@Param("id") Long id);
