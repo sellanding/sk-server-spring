@@ -56,11 +56,7 @@ public class InkService {
 
         Ink savedInk = inkRepository.save(ink);
 
-        usageCounterRepository
-            .findById(user.getId())
-            .ifPresent(counter -> {
-                counter.setInkCount(counter.getInkCount() + 1);
-            });
+        usageCounterRepository.incrementInkCount(user.getId());
 
         return savedInk;
     }
@@ -80,10 +76,6 @@ public class InkService {
 
         inkRepository.delete(ink);
 
-        usageCounterRepository
-            .findById(ink.getUser().getId())
-            .ifPresent(counter -> {
-                counter.setInkCount(Math.max(0, counter.getInkCount() - 1));
-            });
+        usageCounterRepository.decrementInkCount(ink.getUser().getId());
     }
 }
